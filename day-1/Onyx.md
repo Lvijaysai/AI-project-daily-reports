@@ -1,4 +1,5 @@
-```markdown
+
+
 # Onyx: Open Source AI Platform
 https://github.com/danswer-ai/danswer
 
