@@ -46,8 +46,4 @@ Onyx is an LLM-agnostic, self-hostable Chat UI and agentic platform designed for
 3. **Synthesize:** Feed context + tool outputs into the LLM.
 4. **Output:** Return the grounded response to the UI.
 
-> *Note: Architecture visualization illustrating the link between connectors, the orchestrator, and the LLM.*
-
 ---
-
-**Next Step:** Would you like me to draft a specific Docker Compose file to help you get started with a local deployment?
