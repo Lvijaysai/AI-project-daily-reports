@@ -1,7 +1,5 @@
 
-```markdown
 # PrivateGPT Project Documentation
-https://github.com/imartinez/privateGPT
 
 ## 1. Project Overview
 PrivateGPT is a production-ready AI project designed to enable **Retrieval Augmented Generation (RAG)** using Large Language Models (LLMs). Its primary value proposition is **privacy**: it allows users to ask questions about their own documents without the data ever leaving the local execution environment. It is built to be offline-capable and API-compatible with OpenAI standards.

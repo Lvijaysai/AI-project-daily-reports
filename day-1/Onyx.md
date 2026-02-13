@@ -1,7 +1,6 @@
 
 
 # Onyx: Open Source AI Platform
-https://github.com/danswer-ai/danswer
 
 Onyx is an LLM-agnostic, self-hostable Chat UI and agentic platform designed for secure enterprise-grade RAG and AI workflows.
 
