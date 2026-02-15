@@ -29,6 +29,12 @@ The solution integrates structured Machine Learning, segmentation, uplift modeli
 * Flask
 * Apache Airflow
 
+Cloud deployment supported on:
+
+* Amazon Web Services
+* Microsoft Azure
+* Google Cloud
+
 Total implementation window: **6–12 months**, depending on scale and infrastructure maturity.
 
 ---
@@ -66,7 +72,7 @@ Total implementation window: **6–12 months**, depending on scale and infrastru
 * 2–5 years transaction history
 * Structured financial transaction data
 * Campaign response logs available
-* Cloud deployment (AWS/Azure)
+* Cloud deployment (AWS/Azure/GCP)
 * Regulatory compliance required (financial domain)
 
 ---
@@ -281,21 +287,114 @@ Boosting generally yields higher accuracy on structured financial data.
 
 # 7. Infrastructure Requirements
 
-## Basic Tier
+## Cloud Infrastructure Strategy Based on Dataset Size
+
+Infrastructure tiers are determined by:
+
+* Number of customer records
+* Historical transaction volume
+* Model type (ML vs DL vs RL)
+* Training frequency
+* Real-time scoring load
+
+---
+## Tier 1 — Small Dataset (Up to 500K Rows)
 
 * 8–16 CPU cores
 * 32GB RAM
 * No GPU
 * Single cloud VM
 
-## Advanced Tier
+### Use Case
+
+* MVP
+* Structured tabular data
+* XGBoost / Random Forest
+* Batch scoring
+* No deep learning
+
+## Infrastructure
+
+**AWS Example**
+
+* EC2 t3.xlarge (4 vCPU, 16GB RAM)
+
+**Azure**
+
+* Standard D4s v5
+
+**GCP**
+
+* n2-standard-4
+
+Database:
+
+* Managed SQL (100GB)
+
+Storage:
+
+* Object storage (200GB)
+
+## Monthly Cost Estimate
+
+| Component  | Monthly Cost    |
+| ---------- | --------------- |
+| Compute VM | $120 – $200     |
+| Database   | $100 – $250     |
+| Storage    | $20 – $40       |
+| Monitoring | $50             |
+| **Total**  | **$300 – $600** |
+
+**Annual:** $3,600 – $7,200
+
+---
+
+
+# Tier 2 — Medium Dataset (500K – 5M Rows)
 
 * 32 CPU cores
 * 128GB RAM
 * Optional GPU (for RL / LSTM)
 * Managed database cluster
 
-## Enterprise Tier
+### Use Case
+
+* Production-grade
+* Segmentation
+* Uplift modeling
+* Near real-time scoring
+* Monthly retraining
+
+## Infrastructure
+
+Training:
+
+* m5.2xlarge (8 vCPU, 32GB RAM)
+
+API:
+
+* 2× m5.large behind load balancer
+
+Database:
+
+* Multi-AZ managed RDS (500GB)
+
+## Monthly Cost
+
+| Component   | Monthly Cost        |
+| ----------- | ------------------- |
+| Training VM | $400 – $600         |
+| API Servers | $250 – $500         |
+| Database    | $400 – $800         |
+| Storage     | $100                |
+| Monitoring  | $150                |
+| **Total**   | **$1,300 – $2,500** |
+
+**Annual:** $15,000 – $30,000
+
+---
+
+## Tier 3 — Large Dataset (5M – 50M Rows)
 
 * Kubernetes cluster
 * Auto-scaling
@@ -303,7 +402,87 @@ Boosting generally yields higher accuracy on structured financial data.
 * MLOps environment
 * CI/CD pipeline
 
+### Use Case
+
+* Enterprise
+* LSTM / Deep Learning
+* Reinforcement Learning
+* High concurrency
+
+## Infrastructure
+
+CPU Cluster:
+
+* 3× c6i.4xlarge
+
+GPU:
+
+* g5.xlarge (NVIDIA GPU)
+
+Database:
+
+* Clustered DB (1–2TB)
+
+Kubernetes:
+
+* EKS / AKS / GKE
+
+## Monthly Cost
+
+| Component   | Monthly Cost         |
+| ----------- | -------------------- |
+| CPU Cluster | $2,000 – $4,000      |
+| GPU         | $800 – $1,500        |
+| Database    | $1,500 – $3,000      |
+| Kubernetes  | $800 – $1,200        |
+| Storage     | $300                 |
+| Monitoring  | $300                 |
+| **Total**   | **$5,700 – $10,000** |
+
+**Annual:** $70,000 – $120,000
+
 ---
+
+# Tier 4 — Massive Dataset (50M+ Rows)
+
+Includes:
+
+* Distributed training
+* Spark cluster
+* Data lake
+* Streaming pipelines
+* Feature store
+
+## Monthly Cost
+
+**$12,000 – $30,000**
+
+---
+
+# Cloud Cost vs Dataset Size Summary
+
+| Rows    | Infra Level | Monthly    | Annual     |
+| ------- | ----------- | ---------- | ---------- |
+| <500K   | Small       | $300–600   | $3.6K–7.2K |
+| 500K–5M | Medium      | $1.3K–2.5K | $15K–30K   |
+| 5M–50M  | Large       | $5.7K–10K  | $70K–120K  |
+| 50M+    | Enterprise  | $12K–30K   | $150K–350K |
+
+---
+
+# Storage Cost Estimation
+
+| Data Size | Approx DB Size |
+| --------- | -------------- |
+| 1M rows   | 0.5–1GB        |
+| 10M rows  | 5–10GB         |
+| 50M rows  | 25–50GB        |
+
+Storage cost: $0.02–$0.10 per GB/month
+Compute dominates total cloud cost.
+
+---
+
 
 # 8. Development Phases & Timeline
 
@@ -342,6 +521,18 @@ Boosting generally yields higher accuracy on structured financial data.
 
 ---
 
+## Infrastructure Cost Add-On (3-Year Projection)
+
+| Tier   | 3-Year Infra Cost |
+| ------ | ----------------- |
+| Medium | $45K – $90K       |
+| Large  | $210K – $360K     |
+
+Cloud cost is secondary.
+Engineering and ML talent drive the majority of total investment.
+
+---
+
 # 10. Risk Analysis
 
 | Risk                  | Mitigation                |
@@ -351,6 +542,14 @@ Boosting generally yields higher accuracy on structured financial data.
 | Model drift           | 30–60 day retraining      |
 | Regulatory compliance | Explainable ML + audits   |
 | RL instability        | Offline simulation first  |
+
+Additional Cloud Risks:
+
+| Risk               | Mitigation                  |
+| ------------------ | --------------------------- |
+| Over-provisioning  | Start medium tier           |
+| Under-provisioning | Horizontal scaling          |
+| GPU misuse         | Validate DL necessity first |
 
 ---
 
@@ -374,12 +573,11 @@ Endpoints:
 
 # 12. Maintenance & Scaling Strategy
 
-* Retraining every 30–60 days
-* Drift monitoring
-* Performance monitoring dashboards
-* Horizontal scaling
-* Feature store governance
-* Version-controlled models (MLflow)
+* Monthly retraining
+* Auto-scaling APIs
+* Data drift monitoring
+* Infra resizing based on workload
+* Multi-AZ redundancy
 
 ---
 
@@ -430,10 +628,10 @@ Generic tools save money short-term. Custom production models drive sustainable 
 
 # 16. Final Commercial Estimation Summary
 
-| Tier       | Timeline    | Investment   | ROI Potential           |
-| ---------- | ----------- | ------------ | ----------------------- |
-| Basic      | 6 months    | $60K–$120K   | Moderate uplift         |
-| Advanced   | 8–10 months | $150K–$300K  | Strong ROI              |
-| Enterprise | 12 months   | $400K–$900K+ | Transformational impact |
+| Tier       | Timeline    | Build Cost   | Infra (Annual) | Total 3-Year Cost | ROI Potential    |
+| ---------- | ----------- | ------------ | -------------- | ----------------- | ---------------- |
+| Basic      | 6 months    | $60K–$120K   | $5K–$10K       | $75K–$150K        | Moderate         |
+| Advanced   | 8–10 months | $150K–$300K  | $15K–$30K      | $200K–$390K       | Strong           |
+| Enterprise | 12 months   | $400K–$900K+ | $70K–$120K     | $610K–$1.2M+      | Transformational |
 
 ---
