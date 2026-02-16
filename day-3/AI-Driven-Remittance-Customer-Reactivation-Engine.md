@@ -1,7 +1,7 @@
 
 ---
 
-# AI-Driven Remittance Customer Reactivation Engine
+# AI-Driven Inactive Customer Reactivation & Offer Personalization Marketing
 
 **Enterprise Production Blueprint & Commercial Proposal**
 
