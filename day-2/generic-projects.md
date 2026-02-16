@@ -1,7 +1,7 @@
 
 ---
 
-# COMPLETE EXECUTION BLUEPRINT (REVISED & EXPANDED)
+# AI-Driven Inactive Customer Reactivation & Offer Personalization Marketing
 
 ---
 # 📌 PROJECT INTRODUCTION
