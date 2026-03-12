@@ -38,7 +38,6 @@ The system utilizes a multi-layered RAG (Retrieval-Augmented Generation) pipelin
 The evaluation identified that approximately **85% of analytical questions** were misclassified as `general` instead of `sql`.
 
 * **Root Cause:** The classifier required specific keywords (e.g., "how many") or a combination of "DB entities" and "actions." Standard analytical phrasing like *"Which month..."* or *"Average price..."* failed to trigger the SQL engine.
-* **Impact:** The system bypassed the database, resulting in the AI answering from its training data rather than the uploaded CSV, leading to factual inaccuracies.
 
 ### 4.2. Latency and Efficiency
 
@@ -83,9 +82,5 @@ The system reported high confidence (1.0) for almost all `general` responses.
 ### Phase 3: Confidence Calibration
 
 * Adjust `confidence_checker.py` to penalize the score if a question appears analytical but the SQL engine was bypassed.
-
-## 7. Conclusion
-
-The AI Knowledge Assistant is a robust framework, but its "brain" is currently disconnected from its "memory" due to the intent classifier. By implementing the suggested keyword expansion, the project will transition from a conversational bot to a highly accurate analytical agent.
 
 ---
